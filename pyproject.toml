@@ -1,7 +1,57 @@
 [project]
 name = "talktoyourdata"
 version = "0.1.0"
-description = "No"
+description = "Voice-native Agentic RAG system"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    # -- Backend framework --
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-multipart>=0.0.9",
+
+    # -- Database --
+    "sqlmodel>=0.0.22",
+    "asyncpg>=0.30.0",
+    "alembic>=1.14.0",
+    "pgvector>=0.3.6",
+
+    # -- Auth --
+    "python-jose[cryptography]>=3.3.0",
+    "bcrypt>=4.1.0",
+
+    # -- Settings --
+    "pydantic-settings>=2.6.0",
+
+    # -- AI / RAG (Phase 3) --
+    "pydantic-ai>=0.0.36",
+    "openai>=1.60.0",
+    "tiktoken>=0.8.0",
+
+    # -- Document parsing (Phase 3) --
+    "pypdf>=5.0.0",
+
+    # -- Caching --
+    "redis[hiredis]>=5.2.0",
+
+    # -- Voice / LiveKit (Phase 4) --
+    "livekit>=0.18.0",
+    "livekit-agents>=0.12.0",
+    "livekit-plugins-deepgram>=0.6.0",
+    "livekit-plugins-openai>=0.10.0",
+    "livekit-plugins-silero>=0.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "httpx>=0.27.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend/app"]
