@@ -13,10 +13,16 @@ from app.db.engine import init_db
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     """Run startup / shutdown hooks."""
-    # startup — create pgvector extension + tables
-    await init_db()
+    import logging
+    logger = logging.getLogger("app.startup")
+
+    try:
+        await init_db()
+        logger.info("Database initialized successfully")
+    except Exception as exc:
+        logger.warning("Could not connect to database on startup: %s", exc)
+        logger.warning("The server will start, but DB-dependent endpoints will fail.")
     yield
-    # shutdown — nothing to clean up for now
 
 
 app = FastAPI(
