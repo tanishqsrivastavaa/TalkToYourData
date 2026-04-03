@@ -4,7 +4,7 @@ import uuid
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession as SQLModelAsyncSession
 
@@ -12,14 +12,16 @@ from app.core.security import decode_access_token
 from app.db.engine import get_session
 from app.db.models import User
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+# Use HTTPBearer for simple Bearer token authentication
+bearer_scheme = HTTPBearer()
 
 
 async def get_current_user(
-    token: Annotated[str, Depends(oauth2_scheme)],
+    credentials: Annotated[HTTPAuthorizationCredentials, Depends(bearer_scheme)],
     session: Annotated[SQLModelAsyncSession, Depends(get_session)],
 ) -> User:
     """Decode JWT and return the authenticated user, or raise 401."""
+    token = credentials.credentials
     payload = decode_access_token(token)
     if payload is None:
         raise HTTPException(
