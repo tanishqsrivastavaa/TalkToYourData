@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import Column, text
+from sqlalchemy import Column, DateTime, text
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -29,6 +29,7 @@ class User(SQLModel, table=True):
     hashed_password: str
     created_at: datetime = Field(
         default_factory=_utcnow,
+        sa_type=DateTime(timezone=True),
         sa_column_kwargs={"server_default": text("now()")},
     )
 
@@ -49,6 +50,7 @@ class Document(SQLModel, table=True):
     content_type: str = Field(max_length=128, default="application/pdf")
     uploaded_at: datetime = Field(
         default_factory=_utcnow,
+        sa_type=DateTime(timezone=True),
         sa_column_kwargs={"server_default": text("now()")},
     )
 
@@ -84,6 +86,7 @@ class Conversation(SQLModel, table=True):
     title: str = Field(default="New Conversation", max_length=256)
     created_at: datetime = Field(
         default_factory=_utcnow,
+        sa_type=DateTime(timezone=True),
         sa_column_kwargs={"server_default": text("now()")},
     )
 
@@ -101,6 +104,7 @@ class Message(SQLModel, table=True):
     content: str
     created_at: datetime = Field(
         default_factory=_utcnow,
+        sa_type=DateTime(timezone=True),
         sa_column_kwargs={"server_default": text("now()")},
     )
 
