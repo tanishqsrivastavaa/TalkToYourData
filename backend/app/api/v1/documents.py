@@ -12,6 +12,9 @@ from app.core.deps import get_current_user
 from app.db.engine import get_session
 from app.db.models import Document, DocumentChunk, User
 
+# Import RAG service for embedding generation
+from app.agents.rag_service import rag_service
+
 router = APIRouter(prefix="/documents", tags=["documents"])
 
 
@@ -67,13 +70,17 @@ async def upload_document(
     session.add(doc)
     await session.flush()  # get doc.id
 
+    # Generate embeddings for each chunk
     for idx, chunk in enumerate(text_chunks):
+        # Generate embedding using RAG service
+        embedding = await rag_service.generate_embedding(chunk)
+
         session.add(
             DocumentChunk(
                 document_id=doc.id,
                 content=chunk,
                 chunk_index=idx,
-                # embedding will be filled by Phase 3 ingestion pipeline
+                embedding=embedding,
             )
         )
 
