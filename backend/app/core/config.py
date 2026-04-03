@@ -34,8 +34,11 @@ class Settings(BaseSettings):
     # ── Deepgram ─────────────────────────────────────────────────
     deepgram_api_key: str = ""
 
+    # ── Cartesia ─────────────────────────────────────────────
+    cartesia_api_key: str = ""
+
     # ── LiveKit ──────────────────────────────────────────────────
-    livekit_url: str = "ws://localhost:7880"
+    livekit_url: str = "wss://talktoyourdata-jc230owd.livekit.cloud"
     livekit_api_key: str = "devkey"
     livekit_api_secret: str = "secret"
 
