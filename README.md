@@ -1,5 +1,20 @@
-# TalkToYourData
+<div align="center">
 
+# 🎙️ TalkToYourData
+
+**Have a conversation with your documents. Literally.**
+
+Voice-native agentic RAG: upload PDFs, then just *talk* to them — Whisper listens, GPT-4o-mini reasons over retrieved context, Cartesia speaks the answer back.
+
+![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)
+![LiveKit](https://img.shields.io/badge/Voice-LiveKit%20WebRTC-green)
+![OpenAI](https://img.shields.io/badge/LLM-GPT--4o--mini-412991?logo=openai&logoColor=white)
+![Cartesia](https://img.shields.io/badge/TTS-Sonic--3-black)
+![pgvector](https://img.shields.io/badge/Search-pgvector%20RAG-4169E1?logo=postgresql&logoColor=white)
+
+</div>
+
+---
 Voice-native Agentic RAG system - Talk to your documents using AI-powered voice conversations.
 
 ## Features
